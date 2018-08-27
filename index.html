@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>轉盤抽獎</title>
+<meta charset="utf-8" />
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no" />
+<meta name="author" content="Thilina Fong" />
+<meta name="description" content="" />
+<style>
+  #wrap{
+    position: relative;
+    margin: 100px;
+  }
+  .turnable{
+    width: 550px;
+    height: 550px;
+    background: url(./bg.jpg) center center;
+    background-size: contain;
+  }
+  @keyframes ani_rotate{
+    from{
+      transform: rotate(0);
+    }
+    to{
+      transform: rotate(3600deg);
+    }
+  }
+  .ani_rotate{
+    animation: ani_rotate 10s ease-in-out infinite;
+  }
+  .pointing{
+    width:130px;
+    height: 170px;
+    background: url(./pointing.png) 0 0 no-repeat;
+    background-size: 130px 170px;
+    position: absolute;
+    left: 219px;
+    top:175px;
+    transform: rotate(35deg);
+  }
+</style>
+</head>
+<body>
+
+<!-- http://119.23.155.83:82/lz/ -->
+
+<div id="wrap">
+  <div class="turnable"></div>
+  <div class="pointing"></div>
+</div>  <!--wrap-->
+
+<script>
+var ele=document.querySelector('.turnable');
+var eleStart=document.querySelector('.pointing');
+
+
+eleStart.onclick=function(){
+  if(ele.className.match(/ani_rotate/gi)){
+    return false;
+  }
+  ele.className='turnable ani_rotate';
+  stopAfter10();
+};
+
+function stopAfter10(){
+  window.setTimeout(function(){
+    ele.className='turnable';
+  },10000);
+}
+</script>
+</body>
+</html>
