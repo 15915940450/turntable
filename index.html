@@ -53,8 +53,8 @@
     constructor(){
       this.ele=document.querySelector('.turnable');
       this.eleStart=document.querySelector('.pointing');
-      this.startDeg=10;
-      this.endDeg=50;
+      this.startDeg=this.createRange360();
+      this.endDeg=this.createRange360();
     }
 
     initDeg(){
@@ -81,6 +81,7 @@
       window.setTimeout(function(){
         es6This.ele.style.transform='rotate('+es6This.endDeg+'deg)';
         es6This.ele.className='turnable';
+        es6This.endDeg=es6This.createRange360();
       },1e4);
       return es6This;
     }
