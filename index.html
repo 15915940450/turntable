@@ -17,17 +17,15 @@
     height: 550px;
     background: url(./bg.jpg) center center;
     background-size: contain;
+    
+    /*初始deg*/
+    /*transform: rotate(10deg);*/
   }
-  @keyframes ani_rotate{
-    from{
-      transform: rotate(0);
-    }
-    to{
-      transform: rotate(3600deg);
-    }
-  }
-  .ani_rotate{
-    animation: ani_rotate 10s ease-in-out infinite;
+  .running{
+    transition: transform 10s ease-in-out;
+
+    /*結束deg*/
+    /*transform: rotate(3610deg);*/
   }
   .pointing{
     width:130px;
@@ -51,23 +49,52 @@
 </div>  <!--wrap-->
 
 <script>
-var ele=document.querySelector('.turnable');
-var eleStart=document.querySelector('.pointing');
+  class Turnable{
+    constructor(){
+      this.ele=document.querySelector('.turnable');
+      this.eleStart=document.querySelector('.pointing');
+      this.startDeg=10;
+      this.endDeg=50;
+    }
+
+    initDeg(){
+      var es6This=this;
+      es6This.ele.style.transform='rotate('+es6This.startDeg+'deg)';
+      es6This.ele.className='turnable';
+      return es6This;
+    }
+    handleClick(){
+      var es6This=this;
+      es6This.eleStart.onclick=function(){
+        //防止重複點擊
+        if(es6This.ele.className.match(/running/gi)){
+          return false;
+        }
+        es6This.ele.style.transform='rotate('+(3600+es6This.endDeg)+'deg)';
+        es6This.ele.className='turnable running';
+        es6This.stopAfter10();
+      };
+      return es6This;
+    }
+    stopAfter10(){
+      var es6This=this;
+      window.setTimeout(function(){
+        es6This.ele.style.transform='rotate('+es6This.endDeg+'deg)';
+        es6This.ele.className='turnable';
+      },1e4);
+      return es6This;
+    }
+    createRange360(){
+      var tmp=Math.floor(Math.random()*360);
+      return tmp;
+    }
+  } //class
+
+  var obj=new Turnable();
+
+  obj.initDeg().handleClick();
 
 
-eleStart.onclick=function(){
-  if(ele.className.match(/ani_rotate/gi)){
-    return false;
-  }
-  ele.className='turnable ani_rotate';
-  stopAfter10();
-};
-
-function stopAfter10(){
-  window.setTimeout(function(){
-    ele.className='turnable';
-  },10000);
-}
 </script>
 </body>
 </html>
